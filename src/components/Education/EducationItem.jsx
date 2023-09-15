@@ -1,9 +1,13 @@
 import { useState } from "react";
+import Input from "../Input/Input";
+import { v4 } from "uuid";
+import Save from "../Buttons/Save";
+import Reset from "../Buttons/Reset";
 
 const EducationItem = () => {
   const defaultSchoolInfo = {
     name: "Politechnika Łódzka",
-    title: "inzynier informatyki",
+    title: "Inzynier informatyki",
     sdate: "2023",
     edate: "2026",
   };
@@ -15,66 +19,40 @@ const EducationItem = () => {
   };
 
   const [edit, setEdit] = useState(false);
-  const [schoolInfo, setSchoolInfo] = useState(defaultSchoolInfo);
+  const [info, setInfo] = useState(defaultSchoolInfo);
 
-  const handleToggleEdit = () => {
-    setEdit((prevEdit) => !prevEdit);
-  };
-
-  const handleResetSchoolInfo = () => {
-    setSchoolInfo(resetSchoolInfo);
-  };
-
-  const handleChangeSchoolInfo = (e) => {
-    setSchoolInfo((prevSchoolInfo) => ({
-      ...prevSchoolInfo,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  const detailsArr = [
+    { name: "name", placeholder: "School name", key: v4() },
+    { name: "title", placeholder: "Title of study", key: v4() },
+    { name: "sdate", placeholder: "Start date of study", key: v4() },
+    { name: "edate", placeholder: "End date of study", key: v4() },
+  ];
 
   return (
     <div>
       {edit ? (
         <>
-          <input
-            type="text"
-            name="name"
-            placeholder="School name"
-            value={schoolInfo.name}
-            onChange={handleChangeSchoolInfo}
-          />
-          <input
-            type="text"
-            name="title"
-            placeholder="Title of study"
-            value={schoolInfo.title}
-            onChange={handleChangeSchoolInfo}
-          />
-          <input
-            type="text"
-            name="sdate"
-            placeholder="Start date of study"
-            value={schoolInfo.sdate}
-            onChange={handleChangeSchoolInfo}
-          />
-          <input
-            type="text"
-            name="edate"
-            placeholder="End date of study"
-            value={schoolInfo.edate}
-            onChange={handleChangeSchoolInfo}
-          />
-          <button onClick={handleResetSchoolInfo}>Reset</button>
-          <button onClick={handleToggleEdit}>Save</button>
+          {detailsArr.map((input) => (
+            <Input
+              key={input.name}
+              type="text"
+              name={input.name}
+              placeholder={input.placeholder}
+              infoGetter={info}
+              infoSetter={setInfo}
+            />
+          ))}
+          <Reset blankInfo={resetSchoolInfo} infoSetter={setInfo} />
+          <Save editSetter={setEdit}>Save</Save>
         </>
       ) : (
         <>
-          <p>{schoolInfo.name}</p>
-          <p>{schoolInfo.title}</p>
+          <p>{info.name}</p>
+          <p>{info.title}</p>
           <p>
-            {schoolInfo.sdate} - {schoolInfo.edate}
+            {info.sdate} - {info.edate}
           </p>
-          <button onClick={handleToggleEdit}>Edit</button>
+          <Save editSetter={setEdit}>Edit</Save>
         </>
       )}
     </div>
