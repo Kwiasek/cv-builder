@@ -1,10 +1,8 @@
 import { useState } from "react";
 import Input from "../Input/Input";
-import { v4 } from "uuid";
-import Save from "../Buttons/Save";
 import Reset from "../Buttons/Reset";
 
-const EducationItem = () => {
+const EducationItem = ({ onSave }) => {
   const defaultSchoolInfo = {
     name: "Politechnika Łódzka",
     title: "Inzynier informatyki",
@@ -18,44 +16,55 @@ const EducationItem = () => {
     edate: "",
   };
 
-  const [edit, setEdit] = useState(false);
   const [info, setInfo] = useState(defaultSchoolInfo);
 
-  const detailsArr = [
-    { name: "name", placeholder: "School name", key: v4() },
-    { name: "title", placeholder: "Title of study", key: v4() },
-    { name: "sdate", placeholder: "Start date of study", key: v4() },
-    { name: "edate", placeholder: "End date of study", key: v4() },
-  ];
+  const handleSave = () => {
+    onSave(info);
+  };
 
   return (
-    <div>
-      {edit ? (
-        <>
-          {detailsArr.map((input) => (
-            <Input
-              key={input.name}
-              type="text"
-              name={input.name}
-              placeholder={input.placeholder}
-              infoGetter={info}
-              infoSetter={setInfo}
-            />
-          ))}
+    <>
+      <p className="self-start font-bold">Education</p>
+      <div className="flex flex-col gap-3 w-4/5 mt-3">
+        <Input
+          type="text"
+          name="name"
+          placeholder="Name"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="text"
+          name="title"
+          placeholder="Title of study"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="text"
+          name="sdate"
+          placeholder="Start date of study"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="text"
+          name="edate"
+          placeholder="End date of study"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <div className="flex justify-between">
+          <button
+            className="px-2 py-1 bg-green-500 text-black rounded-md hover:bg-green-400"
+            onClick={handleSave}
+          >
+            Save
+          </button>
           <Reset blankInfo={resetSchoolInfo} infoSetter={setInfo} />
-          <Save editSetter={setEdit}>Save</Save>
-        </>
-      ) : (
-        <>
-          <p>{info.name}</p>
-          <p>{info.title}</p>
-          <p>
-            {info.sdate} - {info.edate}
-          </p>
-          <Save editSetter={setEdit}>Edit</Save>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 

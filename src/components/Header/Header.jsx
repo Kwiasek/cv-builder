@@ -1,59 +1,67 @@
 import { useState } from "react";
 import Input from "../Input/Input";
 import Reset from "../Buttons/Reset";
-import Save from "../Buttons/Save";
 
-const Header = () => {
-  const defaultUserInfo = {
-    name: "Adam",
-    email: "youremail@example.com",
-    phone: "111 111 111",
-    location: "Lodz, Poland",
-  };
+const Header = ({ onSave }) => {
   const resetUserInfo = {
     name: "",
     email: "",
     phone: "",
     location: "",
   };
-
-  const [edit, setEdit] = useState(false);
+  const defaultUserInfo = {
+    name: "Adam Kwiasowski",
+    email: "kwiasekkwiasek@gmail.com",
+    phone: "518 644 263",
+    location: "Lodz, Poland",
+  };
   const [info, setInfo] = useState(defaultUserInfo);
 
-  const detailsArr = [
-    { name: "name", placeholder: "Name", type: "text" },
-    { name: "email", placeholder: "Email", type: "email" },
-    { name: "phone", placeholder: "Phone", type: "phone" },
-    { name: "location", placeholder: "Location", type: "text" },
-  ];
+  const handleSave = () => {
+    onSave(info);
+  };
 
   return (
     <>
-      <div>
-        {edit ? (
-          <>
-            {detailsArr.map((input) => (
-              <Input
-                key={input.name}
-                type={input.type}
-                name={input.name}
-                placeholder={input.placeholder}
-                infoGetter={info}
-                infoSetter={setInfo}
-              />
-            ))}
-            <Reset blankInfo={resetUserInfo} infoSetter={setInfo} />
-            <Save editSetter={setEdit}>Save</Save>
-          </>
-        ) : (
-          <>
-            <p>{info.name}</p>
-            <p>{info.email}</p>
-            <p>{info.phone}</p>
-            <p>{info.location}</p>
-            <Save editSetter={setEdit}>Edit</Save>
-          </>
-        )}
+      <p className="self-start font-bold">Personal Information</p>
+      <div className="flex flex-col gap-3 w-4/5 mt-3">
+        <Input
+          type="text"
+          name="name"
+          placeholder="Name"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="email"
+          name="email"
+          placeholder="Email"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="phone"
+          name="phone"
+          placeholder="Phone"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          type="text"
+          name="location"
+          placeholder="Location"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <div className="flex justify-between">
+          <button
+            className="px-2 py-1 bg-green-500 text-black rounded-md hover:bg-green-400"
+            onClick={handleSave}
+          >
+            Save
+          </button>
+          <Reset blankInfo={resetUserInfo} infoSetter={setInfo} />
+        </div>
       </div>
     </>
   );

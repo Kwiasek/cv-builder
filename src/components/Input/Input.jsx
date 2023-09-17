@@ -10,6 +10,7 @@ const Input = ({
 }) => {
   return (
     <input
+      className="rounded-md px-2 py-1"
       type={type}
       name={name}
       placeholder={placeholder}

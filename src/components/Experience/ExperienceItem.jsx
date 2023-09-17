@@ -1,9 +1,8 @@
 import Input from "../Input/Input";
 import Reset from "../Buttons/Reset";
-import Save from "../Buttons/Save";
 import { useState } from "react";
 
-const ExperienceItem = () => {
+const ExperienceItem = ({ onSave }) => {
   const defaultExperienceInfo = {
     name: "Microsoft",
     title: "Mid Frontend Developer",
@@ -20,46 +19,57 @@ const ExperienceItem = () => {
     edate: "",
   };
 
-  const detailsArr = [
-    { name: "name", placeholder: "Company name" },
-    { name: "title", placeholder: "Position title" },
-    { name: "resp", placeholder: "Main responsibilities of your job" },
-    { name: "sdate", placeholder: "When you started working" },
-    { name: "edate", placeholder: "When you ended working" },
-  ];
-
-  const [edit, setEdit] = useState(false);
   const [info, setInfo] = useState(defaultExperienceInfo);
 
+  const handleSave = () => {
+    onSave(info);
+  };
+
   return (
-    <div>
-      {edit ? (
-        <>
-          {detailsArr.map((input) => (
-            <Input
-              key={input.name}
-              type="text"
-              name={input.name}
-              placeholder={input.placeholder}
-              infoGetter={info}
-              infoSetter={setInfo}
-            />
-          ))}
+    <>
+      <p className="self-start font-bold">Experience</p>
+      <div className="flex flex-col gap-3 w-4/5 mt-3">
+        <Input
+          name="name"
+          placeholder="Company name"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          name="title"
+          placeholder="Position title"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          name="resp"
+          placeholder="Main responsibilities of your job"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          name="sdate"
+          placeholder="When you started working"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <Input
+          name="edate"
+          placeholder="When you ended working"
+          infoGetter={info}
+          infoSetter={setInfo}
+        />
+        <div className="flex justify-between">
+          <button
+            className="px-2 py-1 bg-green-500 text-black rounded-md hover:bg-green-400"
+            onClick={handleSave}
+          >
+            Save
+          </button>
           <Reset blankInfo={resetExperienceInfo} infoSetter={setInfo} />
-          <Save editSetter={setEdit}>Save</Save>
-        </>
-      ) : (
-        <>
-          <p>{info.name}</p>
-          <p>{info.title}</p>
-          <p>{info.resp}</p>
-          <p>
-            {info.sdate} - {info.edate}
-          </p>
-          <Save editSetter={setEdit}>Edit</Save>
-        </>
-      )}
-    </div>
+        </div>
+      </div>
+    </>
   );
 };
 
