@@ -34,7 +34,7 @@ const App = () => {
 
   return (
     <>
-      <div className="flex flex-row p-4">
+      <div className="flex flex-col gap-3 p-4 md:flex-row">
         <section className="flex-1 flex flex-col items-center print:hidden gap-5">
           <Header onSave={setHeaderInfo} />
           <EducationItem onSave={setEducationInfo} />
