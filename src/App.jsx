@@ -41,7 +41,7 @@ const App = () => {
           <ExperienceItem onSave={setExperienceInfo} />
         </section>
         <section className="sheet flex-1">
-          <section className="flex flex-col items-center gap-4 py-7">
+          <section className="flex flex-col w-full items-center gap-4 py-7 bg-green-300">
             <h1 className="text-4xl font-bold">{headerInfo.name}</h1>
             <span className="flex w-full justify-around text-base">
               {headerInfo.email && (
@@ -65,10 +65,12 @@ const App = () => {
             </span>
           </section>
           {educationInfo.name && (
-            <section className="flex flex-col px-7 gap-4 py-7 ">
-              <p className="text-2xl font-bold">Education</p>
-              <div>
-                <p className="text-base font-bold">{educationInfo.name}</p>
+            <section className="flex flex-col px-7 gap-4 py-7 items-center">
+              <p className="text-base font-bold w-4/5 bg-green-200 text-center">
+                Education
+              </p>
+              <div className="self-start">
+                <p className="text-xl font-bold">{educationInfo.name}</p>
                 <p className="text-sm italic">{educationInfo.title}</p>
                 <p className="text-sm">
                   {educationInfo.sdate &&
@@ -78,11 +80,14 @@ const App = () => {
             </section>
           )}
           {experienceInfo.name && (
-            <section className="flex flex-col px-7 gap-4 py-7 ">
-              <p className="text-2xl font-bold">Experience</p>
-              <div>
-                <p className="text-base font-bold">{experienceInfo.name}</p>
+            <section className="flex flex-col px-7 gap-4 py-7 items-center">
+              <p className="text-base font-bold w-4/5 bg-green-200 text-center">
+                Experience
+              </p>
+              <div className="self-start">
+                <p className="text-xl font-bold">{experienceInfo.name}</p>
                 <p className="text-sm italic">{experienceInfo.title}</p>
+                <p className="text-sm">{experienceInfo.resp}</p>
                 <p className="text-sm">
                   {experienceInfo.sdate &&
                     `${experienceInfo.sdate} - ${experienceInfo.edate}`}
